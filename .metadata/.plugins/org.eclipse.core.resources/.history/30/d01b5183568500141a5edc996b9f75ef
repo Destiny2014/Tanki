@@ -1,0 +1,49 @@
+package javagame;
+import org.lwjgl.input.Mouse;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+
+/**
+ * Created by Sandy on 16.12.2014.
+ */
+public class Menu extends BasicGameState {
+	
+
+
+	
+	public Menu(int state) {
+    }
+    
+	Image playNow;
+	Image exitGame;
+	    
+
+	public  void init(GameContainer gc,StateBasedGame sbg) throws SlickException {	    		  	
+		playNow=new Image("res/Play.png");	    	
+		exitGame=new Image("res/End2.png");	  
+	}
+
+
+    public void render(GameContainer gc,StateBasedGame sbg, Graphics g) throws SlickException {
+    	g.drawString("Welcom to world ow tanks!",200,50);
+    	playNow.draw(150,100);
+    	exitGame.draw(150,200);
+    	
+    }
+
+    public  void update(GameContainer gc,StateBasedGame sbg,int delta) throws SlickException{
+   
+    	
+    }
+
+
+    public  int getID(){
+        return 0;
+    }
+}

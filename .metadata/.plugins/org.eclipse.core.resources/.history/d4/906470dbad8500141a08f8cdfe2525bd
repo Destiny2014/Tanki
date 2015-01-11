@@ -1,0 +1,120 @@
+package javagame;
+
+import org.newdawn.slick.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+
+/**
+ * Created by Sandy on 16.12.2014.
+ */
+public class Play extends BasicGameState {
+    public Play(int state) {
+    }
+    
+    Animation bucky , movingUp , movingDown , movingLeft , movingRight ;
+    Image worldMap;
+    Image house;
+    
+    int[] duration = {200,200};
+    float buckyPositionX=0;
+    float buckyPositionY=0;
+    float shiftX = buckyPositionX+360;
+    float shiftY = buckyPositionY+160;
+    float buckyPositionXX=400;
+    float buckyPositionYY=200;
+    
+    boolean quit = false;
+    
+    
+
+    public  void init(GameContainer gc,StateBasedGame sbg) throws SlickException {
+    	worldMap=new Image("res/map3.png");
+    	house=new Image("res/DOM.png");
+    	Image[] walkup={new Image("res/Djip/dgip5.png"),new Image("res/Djip/dgip6.png")};
+    	Image[] walkDown={new Image("res/Djip/dgip5Down.png"),new Image("res/Djip/dgip5Down.png")};
+    	Image[] walkLeft={new Image("res/Djip/dgip5Left.png"),new Image("res/Djip/dgip5Left.png")};
+    	Image[] walkRight={new Image("res/Djip/dgip5Right.png"),new Image("res/Djip/dgip5Right.png")};
+    	
+    	movingUp= new Animation(walkup,duration,false); 
+    	movingDown= new Animation(walkDown,duration,false);  
+    	movingLeft= new Animation(walkLeft,duration,false);  
+    	movingRight= new Animation(walkRight,duration,false); 
+     	bucky=movingDown;
+    }
+
+
+    public void render(GameContainer gc,StateBasedGame sbg, Graphics g) throws SlickException {
+    	
+    	worldMap.draw(buckyPositionX, buckyPositionY);
+    	house.draw(buckyPositionXX, buckyPositionY);
+        bucky.draw(shiftX,shiftY);
+    	g.drawString("Buckys x:"+buckyPositionX+"\nBukys Y:"+buckyPositionY,100,100);
+    	
+    	if(quit==true){
+    		g.drawString("Resume(F1)", 400, 200);
+    		g.drawString("Main Menu(F2)", 400, 250);
+    		g.drawString("Quit Game(F3)", 400, 300);
+    		if(quit==false){
+    			g.clear();
+    		}
+    	}
+    }
+
+    public  void update(GameContainer gc,StateBasedGame sbg,int delta) throws SlickException{
+    	Input input=gc.getInput();
+    	
+    	if(input.isKeyDown(Input.KEY_ESCAPE)){
+    		quit=true;
+    	}
+    	
+       	if(quit==true){      		
+       		if(input.isKeyDown(Input.KEY_F1)){
+       			quit=false;
+       			
+       		}
+       		if(input.isKeyDown(Input.KEY_F2)){
+       			sbg.enterState(0);
+       		}
+       		if(input.isKeyDown(Input.KEY_F3)){
+       			System.exit(0);
+       		}     			
+       	}
+       	
+       	else{
+     	         	
+       		if(input.isKeyDown(Input.KEY_UP)){    		
+       			bucky= movingUp;    		
+       			buckyPositionY+=delta*.1f;    		
+       			if(buckyPositionY>180){buckyPositionY-=delta*.1f;}    		
+       		}
+    	
+    
+       		if(input.isKeyDown(Input.KEY_DOWN)){    		
+       			bucky= movingDown;    	    		
+       			buckyPositionY-=delta*.1f;    		
+       			if(buckyPositionY<-350){buckyPositionY+=delta*.1f;}    	
+       		}
+    
+       		if(input.isKeyDown(Input.KEY_LEFT)){    	
+       			bucky= movingLeft;   
+       			buckyPositionX+=delta*.1f;    
+       			if(buckyPositionX>384){buckyPositionX-=delta*.1f;}   
+       		}
+    
+       		if(input.isKeyDown(Input.KEY_RIGHT)){           	
+       			bucky= movingRight;    	
+       			buckyPositionX-=delta*.1f;    	
+       			if(buckyPositionX<-435){buckyPositionX+=delta*.1f;}   
+       		}  	
+       	}  	
+    	
+    }
+
+
+    public  int getID(){
+        return 1;
+    }
+}

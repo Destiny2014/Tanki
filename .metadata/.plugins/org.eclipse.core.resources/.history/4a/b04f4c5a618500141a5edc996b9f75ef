@@ -1,0 +1,65 @@
+package javagame;
+import org.lwjgl.input.Mouse;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+
+/**
+ * Created by Sandy on 16.12.2014.
+ */
+public class Menu extends BasicGameState {
+	
+
+	
+    public String mouse ="";
+	
+
+	
+	public Menu(int state) {
+    }
+    
+	Image playNow;
+	Image exitGame;
+	    
+
+	public  void init(GameContainer gc,StateBasedGame sbg) throws SlickException {	    		  	
+		
+	}
+
+
+    public void render(GameContainer gc,StateBasedGame sbg, Graphics g) throws SlickException {
+    	//g.drawString("Welcom to world ow tanks!",200,50);
+    	g.drawString(mouse, 50,50);
+    	playNow.draw(150,100);
+    	exitGame.draw(150,200);
+    	
+    }
+
+    public  void update(GameContainer gc,StateBasedGame sbg,int delta) throws SlickException{
+    	int posX=Mouse.getX();
+    	int posY=Mouse.getY();
+    	mouse="mous position x"+posX + "y:"+posY;
+    	
+    	if((posX>170 && posX<426) && (posY>187 && posY<238)){
+    		if(Mouse.isButtonDown(0)){
+    			sbg.enterState(1);
+    		}
+    	}
+    	//Exit
+    	if((posX>149 && posX<450) && (posY>74 && posY<153)){
+    		if(Mouse.isButtonDown(0)){
+    			System.exit(0);
+    		}
+    	} 
+    }
+
+
+    public  int getID(){
+        return 0;
+    }
+}
